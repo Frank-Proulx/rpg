@@ -1,13 +1,13 @@
 export class Character {
-  constructor(name, health, strength, wisdom, charm) {
+  constructor(name, attack, defense, strength) {
     this.name = name;
-    this.health = health;
+    this.attack = attack;
+    this.defense = defense;
     this.strength = strength;
-    this.wisdom = wisdom;
-    this.charm = charm;
     this.xp = 0;
     this.level = 1;
-    this.hitPoints = health * 50;
+    this.hitPoints = strength * 50;
+    this.isAlive = true;
   }
 
   addLevel() {
@@ -15,19 +15,37 @@ export class Character {
     if (this.xp >= xpNeeded) {
       this.xp = this.xp - xpNeeded;
       this.level++;
+      this.hitPoints += 100;
     }
   }
 
-  doBattle() {
-  
+  doBattle(monster) {
+    this.hitPoints -= monster.attack / this.defense;
+    monster.hitPoints -= this.attack;
+    if (this.hitPoints <= 0) {
+      this.isAlive = false;
+    }
+    if (monster.hitPoints <= 0) {
+      monster.isAlive = false;
+      this.xp += monster.xp;
+      this.addLevel();
+    }
+    // console.log(this.hitPoints);
+    // console.log(monster.hitPoints);
+    // console.log("monster.hitPoints");
+    // console.log(this.isAlive);
+    // console.log(monster.isAlive);
   }
 }
 
 export class Monster extends Character {
-  constructor(){
-    super();
+  constructor(name){
+    super(name);
+    this.name = name;
     this.level = Math.floor(Math.random()*19 + 1);
-    this.hitPoints = 20 * this.level;
-    this.attack = 20 * this.level;
+    this.hitPoints = 30 * this.level;
+    this.attack = 10 * this.level;
+    this.xp = this.level * 5;
+    this.isAlive = true;
   }
 }

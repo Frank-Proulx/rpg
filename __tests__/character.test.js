@@ -10,7 +10,7 @@ describe('Character', () => {
   test('should correctly create a character class with a name and 4 attributes, an xp attribute that starts at 0 and a level that starts at 1', () => {
     const character1 = new Character("Bob", 4, 5, 3);
     expect(character1.name).toEqual("Bob");
-    expect(character1.attack).toEqual(4);
+    expect(character1.attack).toEqual(8);
     expect(character1.defense).toEqual(5);
     expect(character1.strength).toEqual(3);
     expect(character1.xp).toEqual(0);
